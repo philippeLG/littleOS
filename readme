@@ -1,0 +1,9 @@
+http://littleosbook.github.io/ 
+
+# utilisation de qemu au lieu de bosh : 
+qemu-system-x86_64 -boot d -cdrom os.iso -m 4 -monitor stdio
+
+commande monitor : info registers 
+(qemu) info registers
+EAX=cafebabe EBX=0002cd80 ECX=00000001 EDX=00000000
+....
