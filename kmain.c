@@ -15,7 +15,6 @@ char myname[] = "Test";
 
 void kmain()
 {
+	fb_clear();
 	fb_write_str(myname,4);
 }
-
-

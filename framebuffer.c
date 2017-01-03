@@ -53,3 +53,14 @@ int fb_write_str(char *buf, unsigned int len) {
 		}		
 	return len;
 }
+
+void fb_clear(){
+  /*char *fb=(char *)FRAMEBUFFER_ADDRESS;*/
+  
+  unsigned int i=0;
+  while(i<80*25*2) {
+  	    fb_write_cell(2*i, ' ', FB_BLACK, FB_BLACK);
+    	i=i+1;
+  }
+  return;
+}
