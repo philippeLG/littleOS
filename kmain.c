@@ -25,6 +25,6 @@ void kmain()
 	segments_install_gdt();
 	interrupts_install_idt();
 	
-	char code = keyboard_read_scan_code();
-	serial_write(&code,2);
+	/*char code = keyboard_read_scan_code();
+	serial_write(&code,2);*/
 }

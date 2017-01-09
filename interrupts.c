@@ -60,7 +60,7 @@ void interrupt_handler(__attribute__((unused)) struct cpu_state cpu, unsigned in
 			scan_code = keyboard_read_scan_code();
 
 			if (scan_code <= KEYBOARD_MAX_ASCII) {
-				ascii = keyboard_scan_code_to_ascii[scan_code];
+				ascii = keyboard_scan_code_to_ascii(scan_code);
 				serial_configure_baud_rate(SERIAL_COM1_BASE, 4);
 				serial_configure_line(SERIAL_COM1_BASE);
 				char str[1];
