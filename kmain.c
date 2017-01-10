@@ -14,17 +14,16 @@ int sum_of_three(int arg1, int arg2, int arg3)
 
 /***************************************************************************/
 
-char myname[] = "Test";
+char message[]= "Little OS";
+
 
 
 void kmain()
 {
-	fb_clear();
-	fb_write_str(myname,4);
-	serial_write(myname,4);
+	/*fb_clear();*/
+	fb_move_cursor(6*80);
+	fb_write_str(message,sizeof(message));
+	serial_write(message,sizeof(message));
 	segments_install_gdt();
 	interrupts_install_idt();
-	
-	/*char code = keyboard_read_scan_code();
-	serial_write(&code,2);*/
 }
