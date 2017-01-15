@@ -6,6 +6,14 @@ loader.s
 grub 
 geniso
 
+# utilisation de qemu au lieu de bosh : 
+qemu-system-x86_64 -boot d -cdrom os.iso -m 4 -monitor stdio
+
+commande monitor : info registers 
+(qemu) info registers
+EAX=cafebabe EBX=0002cd80 ECX=00000001 EDX=00000000
+
+
 3. Getting to C
 kmain.c
 Makefile
@@ -23,4 +31,8 @@ memory_segment.c .h
 interrupt_handlers.s
 interrupts.c .h
 pic.c
-keyboard.c .h 
+keyboard.c .h
+
+7. The Road to User Mode
+multiboot.h
+program.s ( nasm -fbin modules/program.s -o modules/program ) 

@@ -1,7 +1,7 @@
-OBJECTS = loader.o kmain.o framebuffer.o io.o serial.o keyboard.o gdt.o memory_segments.o idt.o interrupt_handlers.o interrupts.o pic.o
+OBJECTS = loader.o kmain.o framebuffer.o io.o serial.o keyboard.o gdt.o memory_segments.o idt.o interrupt_handlers.o interrupts.o pic.o 
 CC = gcc
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector \
-         -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c 
+CFLAGS = -m32 -nostdlib -fno-builtin -fno-stack-protector \
+         -Wno-unused -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c 
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
@@ -24,11 +24,12 @@ os.iso: kernel.elf
             -o os.iso                       \
             iso
 
+
 #run: os.iso
 #	bochs -f bochsrc.txt -q
 run: os.iso
-	qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -serial stdio
-#qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -monitor stdio
+	#qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -serial stdio
+	qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -monitor stdio
 
 %.o: %.c
 	$(CC) $(CFLAGS)  $< -o $@
