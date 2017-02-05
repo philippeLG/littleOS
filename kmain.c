@@ -26,7 +26,7 @@ int kmain(multiboot_info_t *mbinfo)
 	segments_install_gdt();
 	interrupts_install_idt();
 	
-	enable_paging();
+	init_paging();
 	
 	return 0;
 }

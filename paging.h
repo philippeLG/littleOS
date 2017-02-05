@@ -1,7 +1,11 @@
-#ifndef INCLUDE_PAGING_H
-#define INCLUDE_PAGING_H
+ #ifndef PAGING_H
+#define PAGING_H
 
-void enable_paging(); 
+/**
+  Sets up the environment, page directories etc and
+  enables paging.
+**/
+void init_paging();
 
-#endif 
 
+#endif
