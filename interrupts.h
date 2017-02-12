@@ -23,6 +23,7 @@ void interrupts_install_idt();
 // Wrappers around ASM.
 void load_idt(unsigned int idt_address);
 void interrupt_handler_33();
+void interrupt_handler_14();
 
 struct cpu_state {
 	unsigned int eax;

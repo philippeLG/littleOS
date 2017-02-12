@@ -28,8 +28,8 @@ os.iso: kernel.elf
 #run: os.iso
 #	bochs -f bochsrc.txt -q
 run: os.iso
-	#qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -serial stdio
-	qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -monitor stdio
+	qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -serial stdio
+	#qemu-system-i386 -enable-kvm -boot d -cdrom os.iso -m 4 -monitor stdio
 
 %.o: %.c
 	$(CC) $(CFLAGS)  $< -o $@

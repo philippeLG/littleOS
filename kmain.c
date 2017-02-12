@@ -22,11 +22,15 @@ int kmain(multiboot_info_t *mbinfo)
 	/*fb_clear();*/
 	fb_move_cursor(6*80);
 	fb_write_str(message,sizeof(message));
+	/*fb_write_str("hello\n",5); TODO */
 	serial_write(message,sizeof(message));
 	segments_install_gdt();
 	interrupts_install_idt();
 	
 	init_paging();
+	/* test page fault */	
+	unsigned int *ptr = (unsigned int*)0xA0000000;
+   	unsigned int do_page_fault = *ptr;
 	
 	return 0;
 }
