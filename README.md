@@ -40,3 +40,10 @@ program.s ( nasm -fbin modules/program.s -o modules/program )
 ## 9 Paging
 paging_init.s
 paging.c
+
+## Resources
+http://wiki.osdev.org
+https://github.com/tuhdo/os01
+https://0xax.gitbooks.io/linux-insides/content/
+https://intermezzos.github.io/
+
