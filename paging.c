@@ -6,10 +6,6 @@
 #include "paging.h"
 #include "serial.h" // pour afficher un msg
 
-
-#define NUM_PAGES 1024
-#define PAGE_FRAME_SIZE 4096
-
 extern void enablePaging(unsigned int*);
 
 // paging mode : 
@@ -25,29 +21,29 @@ unsigned int page_table[NUM_PAGES] __attribute__((aligned(PAGE_FRAME_SIZE)));
 
 
 void init_paging() {
+	int i;
 
 	// Create page directory, supervisor mode, read/write, not present : 0 1 0 = 2   
-	for (int i = 0; i < NUM_PAGES; i++) {
-        page_directory[i] = 0x00000002;
+	for (i = 0; i < NUM_PAGES; i++) {
+		page_directory[i] = 0x00000002;
         //page_directory[i] = (unsigned int)directory;    
-     }     
+     	}     
 
-    // Create page table, supervisor mode, read/write, present : 0 1 1 = 3   
-    // As the address is page aligned, it will always leave 12 bits zeroed.  
-    for (int i = 0; i < NUM_PAGES; i++) { 
-        page_table[i] = (i * 0x1000) | 3;
-    }
+	// Create page table, supervisor mode, read/write, present : 0 1 1 = 3   
+	// As the address is page aligned, it will always leave 12 bits zeroed.  
+	for (i = 0; i < NUM_PAGES; i++) { 
+	        page_table[i] = (i * 0x1000) | 3;
+	}	
 
-    // put page_table into page_directory supervisor level, read/write, present
-    page_directory[0] = ((unsigned int)page_table) | 3;
+	// put page_table into page_directory supervisor level, read/write, present
+	page_directory[0] = ((unsigned int)page_table) | 3;
 	 	
    	enablePaging(page_directory);
 
    	//register_interrupt_handler(14, handle_page_fault);
 }
 
-void page_fault()
-{
+void page_fault() {
 	char message[]= "Page Fault";
 	serial_write(message,sizeof(message));
 }

@@ -28,9 +28,9 @@ int kmain(multiboot_info_t *mbinfo)
 	interrupts_install_idt();
 	
 	init_paging();
-	/* test page fault */	
+	/* test page fault 	
 	unsigned int *ptr = (unsigned int*)0xA0000000;
-   	unsigned int do_page_fault = *ptr;
+   	unsigned int do_page_fault = *ptr;*/
 	
 	return 0;
 }
