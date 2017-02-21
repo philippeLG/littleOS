@@ -1,6 +1,9 @@
 #ifndef PAGING_H
 #define PAGING_H
 
+#define NUM_PAGES 1024
+#define PAGE_FRAME_SIZE 4096
+
 #define PRESENT         1
 #define PAGE_READONLY   0
 #define PAGE_READWRITE  1
@@ -9,34 +12,42 @@
 #define PAGE_SIZE_4KB   0
 #define PAGE_SIZE_4MB   1
 
-struct directory {
-  unsigned char present:1;        //  0: 1 if present
-  unsigned char rw:1;             //  1: Read-only if 0, readwrite if 1 
-  unsigned char us:1;             //  2: 1 user or 0 supervisor 
-  unsigned char pwt:1;            //  3: page-level write-through
-  unsigned char pcd:1;            //  4: page-level cache disable
-  unsigned char a:1;              //  5: accessed since last refresh
-  unsigned char ignored:1;        //  6:
-  unsigned char ps:1;             //  7: page size, 0=4KB 1=4MB
-  unsigned char ignored2:4;       //  8 - 11
-  unsigned int page_table:20;     //  12 - 31: physical address of 4KB aligned page table referenced by this entry
-} __attribute__((packed));
-typedef struct directory directory_t;
+typedef struct page
+{
+   unsigned int present    : 1;   // Page present in memory
+   unsigned int rw         : 1;   // Read-only if clear, readwrite if set
+   unsigned int user       : 1;   // Supervisor level only if clear
+   unsigned int accessed   : 1;   // Has the page been accessed since last refresh?
+   unsigned int dirty      : 1;   // Has the page been written to since last refresh?
+   unsigned int unused     : 7;   // Amalgamation of unused and reserved bits
+   unsigned int frame      : 20;  // Frame address (shifted right 12 bits)
+} page_t;
 
-struct page {
-  unsigned char present:1;        //  0: 1 if present
-  unsigned char rw:1;             //  1: Read-only if 0, readwrite if 1
-  unsigned char us:1;             //  2: 1 user or 0 supervisor 
-  unsigned char pwt:1;            //  3: page-level write-through
-  unsigned char pcd:1;            //  4: page-level cache disable
-  unsigned char a:1;              //  5: accessed
-  unsigned char d:1;              //  6: dirty, as the page been written to since last refresh?
-  unsigned char pat:1;            //  7: must be 0 unless PAT supported
-  unsigned char g:1;              //  8: global translation
-  unsigned char ignored2:3;       //  9 - 11
-  unsigned int page_frame:20;     //  12 - 31: physical address of 4KB page frame
-} __attribute__((packed));
-typedef struct page page_t;
+typedef struct page_table
+{
+   page_t pages[1024] __attribute__((aligned(4096)));
+} page_table_t;
+
+typedef struct page_directory
+{
+   /**
+      Array of pointers to pagetables.
+   **/
+   page_table_t *tables[1024];
+   /**
+      Array of pointers to the pagetables above, but gives their *physical*
+      location, for loading into the CR3 register.
+   **/
+   unsigned int tablesPhysical[1024];
+   /**
+      The physical address of tablesPhysical. This comes into play
+      when we get our kernel heap allocated and the directory
+      may be in a different location in virtual memory.
+   **/
+   unsigned int physicalAddr;
+} page_directory_t;
+
+
 
 /**
   Sets up the environment, page directories etc and
