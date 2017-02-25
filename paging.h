@@ -1,6 +1,14 @@
 #ifndef PAGING_H
 #define PAGING_H
 
+// paging mode : 
+// NON PAE 4K Mode (32 bit) - level 0 page, 1 PT, 2 PD  <--  
+// NON PAE 4M Mode (32 bit) - level 0 page, 2 PD 
+// PAE 4K Mode (32 bit) - level 0 page, 1 PT, 2 PD, 3 PDP 
+// PAE 4M Mode (32 bit) - level 0 page, 2 PD, 3 PDP
+// LONG MODE 4K (64 bit) - level 0 page, 1 PT, 2 PD, 3 PDP, 4 PML4
+
+
 #define NUM_PAGES 1024
 #define PAGE_FRAME_SIZE 4096
 
