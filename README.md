@@ -46,4 +46,5 @@ EAX=cafebabe EBX=0002cd80 ECX=00000001 EDX=00000000
 - https://github.com/tuhdo/os01
 - https://0xax.gitbooks.io/linux-insides/content/
 - https://intermezzos.github.io/
+- http://os.phil-opp.com/
 
