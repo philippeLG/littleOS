@@ -47,4 +47,5 @@ EAX=cafebabe EBX=0002cd80 ECX=00000001 EDX=00000000
 - https://0xax.gitbooks.io/linux-insides/content/
 - https://intermezzos.github.io/
 - http://os.phil-opp.com/
+- http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 
